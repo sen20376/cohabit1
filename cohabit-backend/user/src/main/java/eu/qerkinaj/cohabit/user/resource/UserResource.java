@@ -29,26 +29,9 @@ public class UserResource {
     @Authenticated
     @Path("/me")
     public UserDTO me() {
-        String userIdStr = null;
-
-        Object userIdClaim = jwt.getClaim("userId");
-        if (userIdClaim != null) {
-            userIdStr = userIdClaim.toString();
-        }
-
-        if (userIdStr == null) {
-            userIdStr = jwt.getSubject();
-        }
-
-        LOG.infof("User identifying as [%s] is requesting profile data (/me)", userIdStr);
-
-        try {
-            UUID uuid = UUID.fromString(userIdStr);
-            return userService.getUser(uuid);
-        } catch (IllegalArgumentException | NullPointerException e) {
-            LOG.errorf("Invalid UUID in Token: %s. Token payload might be wrong.", userIdStr);
-            throw new BadRequestException("Token enthält keine gültige User-ID (UUID erwartet).");
-        }
+        UUID userId = resolveUserId();
+        LOG.infof("User [%s] is requesting profile data (/me)", userId);
+        return userService.getUser(userId);
     }
 
     @GET

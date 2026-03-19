@@ -9,8 +9,6 @@ public record ResidentialComplexDTO(
         String name,
         String address,
         String district,
-        Double latitude,
-        Double longitude,
         Double averageRating,
         List<String> imageUrls
 ) {

@@ -60,8 +60,7 @@ public class ApartmentResource {
                 userIdStr, dto.title(), dto.complexId());
 
         if (userIdStr == null) {
-            LOG.warn("No user ID found in token for creation. Generating random UUID (Test-Mode?).");
-            userIdStr = UUID.randomUUID().toString();
+            throw new NotAuthorizedException("No user ID in token");
         }
 
         UUID ownerId = UUID.fromString(userIdStr);
@@ -83,7 +82,7 @@ public class ApartmentResource {
         LOG.infof("User [%s] searching apartments with filters - Size: %s-%s, District: %s, Complex: %s",
                 userId, minSize, maxSize, district, complexName);
 
-        var filter = new ApartmentFilterDTO(minSize, maxSize, null, district, complexName, address);
+        var filter = new ApartmentFilterDTO(minSize, maxSize, district, complexName, address);
         return apartmentService.searchApartments(filter);
     }
 

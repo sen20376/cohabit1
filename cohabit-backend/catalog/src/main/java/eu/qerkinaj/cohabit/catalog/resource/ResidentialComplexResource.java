@@ -42,10 +42,9 @@ public class ResidentialComplexResource {
 
     @GET
     @Path("/complexes/{id}")
-    @RolesAllowed({Role.USER, Role.VENDOR})
+    @PermitAll
     public ResidentialComplexView getComplexDetails(@PathParam("id") UUID id) {
-        String userId = jwt.getSubject();
-        LOG.infof("User [%s] requests details for complex [%s]", userId, id);
+        LOG.infof("User [%s] requests details for complex [%s]", getUserIdSafe(), id);
 
         return residentialComplexService.getComplexDetails(id);
     }

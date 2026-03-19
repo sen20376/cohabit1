@@ -3,14 +3,11 @@ package eu.qerkinaj.cohabit.catalog.domain;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
 import org.locationtech.jts.geom.Point;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -42,10 +39,6 @@ public class ResidentialComplex extends PanacheEntityBase {
     @Column(columnDefinition = "geometry(Point, 4326)")
     public Point location;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "jsonb")
-    public Map<String, Object> attributes;
-
     @ManyToOne
     @JoinColumn(name = "geo_region_id")
     public GeoRegion geoRegion;
@@ -66,13 +59,4 @@ public class ResidentialComplex extends PanacheEntityBase {
 
     @Column(name = "avg_rating")
     public Double avgRating = 0.0;
-
-    public static List<ResidentialComplex> findNearby(Point userLocation, double radiusInMeters) {
-        return find("dwithin(location, ?1, ?2) = true", userLocation, radiusInMeters).list();
-    }
-
-    public static List<ResidentialComplex> findByRegion(String regionCode) {
-        return find("geoRegion.code", regionCode).list();
-    }
 }
-
