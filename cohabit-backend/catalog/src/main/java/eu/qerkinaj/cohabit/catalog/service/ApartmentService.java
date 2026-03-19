@@ -39,10 +39,20 @@ public class ApartmentService {
         return mapper.toApartmentDTOs(entities);
     }
 
+    @Transactional
     public ApartmentView getApartmentDetails(UUID id) {
         LOG.infof("Fetching details for apartment ID: %s", id);
 
-        ApartmentDTO apartmentDTO = incrementViewCountAndFetch(id);
+        Apartment apartment = Apartment.findById(id);
+        if (apartment == null) {
+            LOG.warnf("Apartment with ID %s not found.", id);
+            throw new NotFoundException("Apartment not found: " + id);
+        }
+
+        if (apartment.viewCount == null) apartment.viewCount = 0L;
+        apartment.viewCount++;
+
+        ApartmentDTO apartmentDTO = mapper.toDTO(apartment);
 
         List<RatingDTO> ratings;
         try {
@@ -55,18 +65,6 @@ public class ApartmentService {
         }
 
         return new ApartmentView(apartmentDTO, ratings);
-    }
-
-    @Transactional
-    ApartmentDTO incrementViewCountAndFetch(UUID id) {
-        Apartment apartment = Apartment.findById(id);
-        if (apartment == null) {
-            LOG.warnf("Apartment with ID %s not found.", id);
-            throw new NotFoundException("Apartment not found: " + id);
-        }
-        if (apartment.viewCount == null) apartment.viewCount = 0L;
-        apartment.viewCount++;
-        return mapper.toDTO(apartment);
     }
 
     @Transactional
