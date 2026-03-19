@@ -5,10 +5,11 @@ target/
 *.war
 *.ear
 
-# IDE
+# IDE & tooling
 .idea/
 *.iml
 .vscode/
+.claude/
 *.swp
 
 # Quarkus
