@@ -161,7 +161,7 @@ public class ResidentialComplexService {
         }
 
         if (district != null && !district.isBlank()) {
-            query.append(" AND lower(geoRegion.name) LIKE :district");
+            query.append(" AND lower(zipCode) LIKE :district");
             params.put("district", "%" + district.toLowerCase() + "%");
         }
 

@@ -111,7 +111,7 @@ public class ApartmentService {
         }
 
         if (district != null && !district.isBlank()) {
-            queryBuilder.append(" AND lower(complex.geoRegion.name) LIKE :dist");
+            queryBuilder.append(" AND lower(complex.zipCode) LIKE :dist");
             params.put("dist", "%" + district.toLowerCase() + "%");
         }
 
