@@ -1,24 +1,17 @@
 package eu.qerkinaj.cohabit.common.auth;
 
 import eu.qerkinaj.cohabit.common.Role;
-import io.quarkus.arc.profile.IfBuildProfile;
 import io.quarkus.security.identity.AuthenticationRequestContext;
 import io.quarkus.security.identity.IdentityProvider;
 import io.quarkus.security.identity.SecurityIdentity;
 import io.quarkus.security.identity.request.TokenAuthenticationRequest;
 import io.quarkus.security.runtime.QuarkusSecurityIdentity;
 import io.smallrye.mutiny.Uni;
-import io.vertx.core.impl.logging.Logger;
-import io.vertx.core.impl.logging.LoggerFactory;
-import jakarta.enterprise.context.ApplicationScoped;
-
 import java.util.Set;
 
 //@IfBuildProfile("dev")
 //@ApplicationScoped
 public class DevIdentityProvider implements IdentityProvider<TokenAuthenticationRequest> {
-
-    private static final Logger log = LoggerFactory.getLogger(DevIdentityProvider.class);
 
     @Override
     public Class<TokenAuthenticationRequest> getRequestType() {

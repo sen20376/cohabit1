@@ -13,6 +13,8 @@
     let submitting = false;
 
     let editingRatingId = null;
+    let isBookmarked = false;
+    let bookmarkLoading = false;
 
     const criteriaLabels = {
         noise: 'Lautstärke',
@@ -29,6 +31,34 @@
             noise: 3, light: 3, cleanliness: 3, transport: 3, neighborhood: 3
         }
     };
+
+    async function loadBookmarkState() {
+        if (!$user) return;
+        try {
+            const bookmarks = await apiCall('auth', '/api/v1/users/me/bookmarks');
+            isBookmarked = bookmarks.includes(apartmentId);
+        } catch (e) {
+            console.error("Merkliste konnte nicht geladen werden:", e);
+        }
+    }
+
+    async function toggleBookmark() {
+        if (!$user) return alert("Bitte erst einloggen!");
+        bookmarkLoading = true;
+        try {
+            if (isBookmarked) {
+                await apiCall('auth', `/api/v1/users/me/bookmarks/${apartmentId}`, 'DELETE');
+                isBookmarked = false;
+            } else {
+                await apiCall('auth', `/api/v1/users/me/bookmarks/${apartmentId}`, 'POST');
+                isBookmarked = true;
+            }
+        } catch (e) {
+            alert("Fehler: " + e.message);
+        } finally {
+            bookmarkLoading = false;
+        }
+    }
 
     async function loadData() {
         loading = true;
@@ -61,6 +91,7 @@
 
     onMount(() => {
         loadData();
+        loadBookmarkState();
     });
 
     async function handleShare() {
@@ -227,6 +258,18 @@
                             >
                                 <span>📤</span> <span class="hidden sm:inline">Teilen</span>
                             </button>
+
+                            {#if $user}
+                                <button
+                                        on:click={toggleBookmark}
+                                        disabled={bookmarkLoading}
+                                        class={`backdrop-blur px-4 py-2 rounded-lg text-sm font-bold transition-colors border flex items-center gap-2 ${isBookmarked ? 'bg-yellow-400/80 border-yellow-300 text-slate-900 hover:bg-yellow-400' : 'bg-white/20 hover:bg-white/30 border-white/40 text-white'}`}
+                                        title={isBookmarked ? 'Aus Merkliste entfernen' : 'Zur Merkliste hinzufügen'}
+                                >
+                                    <span>{isBookmarked ? '🔖' : '🏷️'}</span>
+                                    <span class="hidden sm:inline">{isBookmarked ? 'Gespeichert' : 'Merken'}</span>
+                                </button>
+                            {/if}
 
                             {#if $user && apartment.ownerId === $user.id}
                                 <button on:click={handleEditApartment} class="bg-white/20 hover:bg-white/30 backdrop-blur text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors border border-white/40">
@@ -420,19 +463,25 @@
                                         {/if}
 
                                         <div class="ml-auto">
-                                            <button
-                                                    on:click={() => handleVote(rating.id)}
-                                                    class="flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors bg-white border border-slate-200 hover:border-blue-300 px-3 py-1.5 rounded-full shadow-sm"
-                                                    title="War diese Bewertung hilfreich?"
-                                            >
-                                                <span>👍</span>
-                                                <span>Hilfreich</span>
-                                                {#if rating.helpfulVotes > 0}
-                                                    <span class="ml-1 bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded-full text-[10px]">
-                                                        {rating.helpfulVotes}
-                                                    </span>
-                                                {/if}
-                                            </button>
+                                            {#if !$user || rating.userId !== $user.id}
+                                                <button
+                                                        on:click={() => handleVote(rating.id)}
+                                                        class="flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors bg-white border border-slate-200 hover:border-blue-300 px-3 py-1.5 rounded-full shadow-sm"
+                                                        title="War diese Bewertung hilfreich?"
+                                                >
+                                                    <span>👍</span>
+                                                    <span>Hilfreich</span>
+                                                    {#if rating.helpfulVotes > 0}
+                                                        <span class="ml-1 bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded-full text-[10px]">
+                                                            {rating.helpfulVotes}
+                                                        </span>
+                                                    {/if}
+                                                </button>
+                                            {:else if rating.helpfulVotes > 0}
+                                                <span class="flex items-center gap-1.5 text-xs text-slate-400 px-3 py-1.5">
+                                                    👍 {rating.helpfulVotes}
+                                                </span>
+                                            {/if}
                                         </div>
                                     </div>
 

@@ -38,6 +38,13 @@
 						</a>
 					{/if}
 
+					{#if $user.roles && $user.roles.includes('USER')}
+						<a href="/bookmarks"
+						   class="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
+							🔖 Merkliste
+						</a>
+					{/if}
+
 					<button on:click={handleLogout}
 							class="px-4 py-2 text-sm font-medium text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-50 hover:text-slate-900 transition-colors">
 						Logout

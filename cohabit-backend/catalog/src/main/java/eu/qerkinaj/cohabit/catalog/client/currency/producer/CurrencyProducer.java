@@ -16,8 +16,6 @@ public class CurrencyProducer {
     @Context
     UriInfo uriInfo;
 
-    // TODO: inject GeoService when ready
-    // @Inject GeoService geoService;
 
     @Produces
     @CurrentCurrency

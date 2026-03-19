@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
 
+import java.util.List;
 import java.util.UUID;
 
 @Path("/api/v1/users")
@@ -59,5 +60,35 @@ public class UserResource {
         LOG.infof("User [%s] is requesting email address for User-ID [%s]", requestingUser, id);
 
         return userService.getUserEmail(UUID.fromString(id));
+    }
+
+    @GET
+    @Path("/me/bookmarks")
+    @Authenticated
+    public List<UUID> getBookmarks() {
+        UUID userId = resolveUserId();
+        return userService.getBookmarks(userId);
+    }
+
+    @POST
+    @Path("/me/bookmarks/{apartmentId}")
+    @Authenticated
+    public void addBookmark(@PathParam("apartmentId") UUID apartmentId) {
+        UUID userId = resolveUserId();
+        userService.addBookmark(userId, apartmentId);
+    }
+
+    @DELETE
+    @Path("/me/bookmarks/{apartmentId}")
+    @Authenticated
+    public void removeBookmark(@PathParam("apartmentId") UUID apartmentId) {
+        UUID userId = resolveUserId();
+        userService.removeBookmark(userId, apartmentId);
+    }
+
+    private UUID resolveUserId() {
+        Object claim = jwt.getClaim("userId");
+        String id = claim != null ? claim.toString() : jwt.getSubject();
+        return UUID.fromString(id);
     }
 }

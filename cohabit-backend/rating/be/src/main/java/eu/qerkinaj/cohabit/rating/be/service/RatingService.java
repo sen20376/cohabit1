@@ -85,22 +85,19 @@ public class RatingService {
         try {
             LOG.debugf("Calculating new average for target [%s]...", targetId);
 
-            Double avg = Rating.getEntityManager()
-                    .createQuery("SELECT AVG(r.score) FROM Rating r WHERE r.targetId = :targetId", Double.class)
+            Object avgResult = Rating.getEntityManager()
+                    .createQuery("SELECT COALESCE(AVG(r.score), 0.0) FROM Rating r WHERE r.targetId = :targetId")
                     .setParameter("targetId", targetId)
                     .getSingleResult();
 
-            if (avg != null) {
-                double roundedAvg = Math.round(avg * 10.0) / 10.0;
+            double avg = avgResult instanceof Number ? ((Number) avgResult).doubleValue() : 0.0;
+            double roundedAvg = Math.round(avg * 10.0) / 10.0;
 
-                LOG.infof("New calculated average for [%s] is %s. Sending update to Catalog-Service...", targetId, roundedAvg);
+            LOG.infof("New calculated average for [%s] is %s. Sending update to Catalog-Service...", targetId, roundedAvg);
 
 //                catalogClient.updateAverageRating(targetId, roundedAvg);
 
-                LOG.info("Catalog updated successfully.");
-            } else {
-                LOG.warnf("Average calculation returned NULL for target [%s]", targetId);
-            }
+            LOG.info("Catalog updated successfully.");
         } catch (Exception e) {
             LOG.errorf(e, "Failed to update average in Catalog Service for target [%s]. Catalog might be out of sync.", targetId);
         }

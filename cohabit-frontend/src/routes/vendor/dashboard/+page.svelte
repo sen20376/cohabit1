@@ -45,6 +45,15 @@
         }
     }
 
+    async function handleToggleActive(id) {
+        try {
+            await apiCall('complex', `/api/v1/catalog/apartments/${id}/active`, 'PATCH');
+            apartments = apartments.map(a => a.id === id ? { ...a, active: !a.active } : a);
+        } catch (e) {
+            alert("Fehler beim Ändern des Status: " + e.message);
+        }
+    }
+
     async function handleDeleteComplex(id) {
         if(!confirm("ACHTUNG: Möchtest du diese Anlage wirklich löschen?")) return;
 
@@ -111,6 +120,9 @@
                                         📍 {apt.address?.city || 'Unbekannter Ort'}
                                     </p>
                                 </div>
+                                <span class={`text-xs font-bold px-2 py-1 rounded-full ${apt.active !== false ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                                    {apt.active !== false ? 'Aktiv' : 'Inaktiv'}
+                                </span>
                             </div>
 
                             <div class="p-5 grid grid-cols-2 gap-4 text-sm text-gray-600">
@@ -138,6 +150,9 @@
                                 <a href={`/vendor/edit-apartment/${apt.id}`} class="flex-1 text-center py-2 bg-white border border-gray-300 rounded text-slate-700 hover:bg-slate-50 text-sm font-medium">
                                     Bearbeiten
                                 </a>
+                                <button on:click={() => handleToggleActive(apt.id)} class={`flex-1 text-center py-2 bg-white border rounded text-sm font-medium ${apt.active !== false ? 'border-yellow-200 text-yellow-700 hover:bg-yellow-50' : 'border-green-200 text-green-700 hover:bg-green-50'}`}>
+                                    {apt.active !== false ? 'Deaktivieren' : 'Aktivieren'}
+                                </button>
                                 <button on:click={() => handleDeleteApartment(apt.id)} class="flex-1 text-center py-2 bg-white border border-red-200 text-red-600 hover:bg-red-50 text-sm font-medium">
                                     Löschen
                                 </button>

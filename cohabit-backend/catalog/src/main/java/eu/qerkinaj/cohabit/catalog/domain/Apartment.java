@@ -48,6 +48,7 @@ public class Apartment extends PanacheEntityBase {
     @Column(name = "view_count")
     public Long viewCount = 0L;
 
+    @Column(name = "active")
     public boolean active = true;
 
     @CreationTimestamp

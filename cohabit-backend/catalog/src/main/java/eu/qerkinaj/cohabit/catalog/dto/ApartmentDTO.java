@@ -14,6 +14,7 @@ public record ApartmentDTO(
         String description,
         Double avgRating,
         Long viewCount,
+        boolean active,
         List<String> imageUrls
 ) {
 }

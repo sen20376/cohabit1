@@ -14,6 +14,7 @@ public interface RatingMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "helpfulVotes", ignore = true)
     @Mapping(target = "userId", source = "userId")
     Rating toEntity(RatingInput input, UUID userId);
 

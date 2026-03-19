@@ -95,6 +95,14 @@ public class ApartmentResource {
         apartmentService.updateApartment(id, dto, UUID.fromString(userIdStr));
     }
 
+    @PATCH
+    @Path("/apartments/{id}/active")
+    @RolesAllowed(Role.VENDOR)
+    public void toggleActive(@PathParam("id") UUID id) {
+        String userIdStr = jwt.getSubject();
+        apartmentService.toggleActive(id, UUID.fromString(userIdStr));
+    }
+
     @DELETE
     @Path("/apartments/{id}")
     @RolesAllowed(Role.VENDOR)

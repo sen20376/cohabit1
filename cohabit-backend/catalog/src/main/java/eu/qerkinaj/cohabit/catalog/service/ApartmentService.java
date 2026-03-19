@@ -174,6 +174,19 @@ public class ApartmentService {
     }
 
     @Transactional
+    public void toggleActive(UUID id, UUID userId) {
+        Apartment apt = Apartment.findById(id);
+        if (apt == null) {
+            throw new NotFoundException("Wohnung nicht gefunden");
+        }
+        if (!apt.ownerId.equals(userId)) {
+            throw new ForbiddenException("Du darfst nur deine eigenen Wohnungen ändern.");
+        }
+        apt.active = !apt.active;
+        LOG.infof("Apartment %s active status set to %s by owner %s", id, apt.active, userId);
+    }
+
+    @Transactional
     public void deleteApartment(UUID id, UUID userId) {
         Apartment apt = Apartment.findById(id);
         if (apt == null) {

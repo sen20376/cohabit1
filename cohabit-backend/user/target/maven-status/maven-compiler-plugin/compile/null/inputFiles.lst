@@ -1,0 +1,17 @@
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\domain\Address.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\domain\Bookmark.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\domain\User.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\dto\AddressDTO.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\dto\LoginRequest.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\dto\TokenResponse.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\dto\UserDTO.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\dto\UserInput.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\dto\UserView.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\dto\VendorView.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\mapper\AddressMapper.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\mapper\UserMapper.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\resource\AuthResource.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\resource\UserResource.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\service\LoginService.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\service\RegistrationService.java
+C:\Users\Berkant\Desktop\Cohabit1\cohabit-backend\user\src\main\java\eu\qerkinaj\cohabit\user\service\UserService.java
