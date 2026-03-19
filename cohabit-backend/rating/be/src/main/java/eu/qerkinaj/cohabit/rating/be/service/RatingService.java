@@ -1,7 +1,7 @@
 package eu.qerkinaj.cohabit.rating.be.service;
 
-import eu.qerkinaj.cohabit.rating.api.dto.RatingDTO;
-import eu.qerkinaj.cohabit.rating.api.dto.RatingInput;
+import eu.qerkinaj.cohabit.rating.be.dto.RatingDTO;
+import eu.qerkinaj.cohabit.rating.be.dto.RatingInput;
 import eu.qerkinaj.cohabit.rating.be.CatalogClient;
 import eu.qerkinaj.cohabit.rating.be.domain.Rating;
 import eu.qerkinaj.cohabit.rating.be.domain.RatingCriteriaDefinition;

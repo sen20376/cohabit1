@@ -4,11 +4,10 @@ import eu.qerkinaj.cohabit.catalog.client.RatingClient;
 import eu.qerkinaj.cohabit.catalog.domain.Apartment;
 import eu.qerkinaj.cohabit.catalog.domain.ResidentialComplex;
 import eu.qerkinaj.cohabit.catalog.dto.ApartmentDTO;
-import eu.qerkinaj.cohabit.catalog.dto.ApartmentFilterDTO;
 import eu.qerkinaj.cohabit.catalog.dto.CreateApartmentDTO;
 import eu.qerkinaj.cohabit.catalog.mapper.CatalogMapper;
+import eu.qerkinaj.cohabit.catalog.dto.RatingDTO;
 import eu.qerkinaj.cohabit.catalog.view.ApartmentView;
-import eu.qerkinaj.cohabit.rating.api.dto.RatingDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -40,20 +39,10 @@ public class ApartmentService {
         return mapper.toApartmentDTOs(entities);
     }
 
-    @Transactional
     public ApartmentView getApartmentDetails(UUID id) {
         LOG.infof("Fetching details for apartment ID: %s", id);
 
-        Apartment apartment = Apartment.findById(id);
-        if (apartment == null) {
-            LOG.warnf("Apartment with ID %s not found.", id);
-            throw new NotFoundException("Apartment not found: " + id);
-        }
-
-        if (apartment.viewCount == null) apartment.viewCount = 0L;
-        apartment.viewCount++;
-
-        ApartmentDTO apartmentDTO = mapper.toDTO(apartment);
+        ApartmentDTO apartmentDTO = incrementViewCountAndFetch(id);
 
         List<RatingDTO> ratings;
         try {
@@ -66,6 +55,18 @@ public class ApartmentService {
         }
 
         return new ApartmentView(apartmentDTO, ratings);
+    }
+
+    @Transactional
+    ApartmentDTO incrementViewCountAndFetch(UUID id) {
+        Apartment apartment = Apartment.findById(id);
+        if (apartment == null) {
+            LOG.warnf("Apartment with ID %s not found.", id);
+            throw new NotFoundException("Apartment not found: " + id);
+        }
+        if (apartment.viewCount == null) apartment.viewCount = 0L;
+        apartment.viewCount++;
+        return mapper.toDTO(apartment);
     }
 
     @Transactional
@@ -94,42 +95,38 @@ public class ApartmentService {
         LOG.infof("Apartment created successfully. Assigned ID: %s", apt.id);
     }
 
-    public List<ApartmentDTO> searchApartments(ApartmentFilterDTO filter) {
+    public List<ApartmentDTO> searchApartments(Double minSize, Double maxSize, String district, String complexName, String address) {
         LOG.infof("Searching apartments. Filters - MinSize: %s, MaxSize: %s, District: '%s', Complex: '%s', Address: '%s'",
-                filter.minSize(), filter.maxSize(), filter.district(), filter.complexName(), filter.address());
+                minSize, maxSize, district, complexName, address);
 
         StringBuilder queryBuilder = new StringBuilder("1=1");
         Map<String, Object> params = new HashMap<>();
 
-        if (filter.minSize() != null) {
+        if (minSize != null) {
             queryBuilder.append(" AND sizeSqm >= :minSize");
-            params.put("minSize", filter.minSize());
+            params.put("minSize", minSize);
         }
 
-        if (filter.maxSize() != null) {
+        if (maxSize != null) {
             queryBuilder.append(" AND sizeSqm <= :maxSize");
-            params.put("maxSize", filter.maxSize());
+            params.put("maxSize", maxSize);
         }
 
-        if (filter.district() != null && !filter.district().isBlank()) {
-            String searchDist = "%" + filter.district().toLowerCase() + "%";
+        if (district != null && !district.isBlank()) {
             queryBuilder.append(" AND lower(complex.geoRegion.name) LIKE :dist");
-            params.put("dist", searchDist);
+            params.put("dist", "%" + district.toLowerCase() + "%");
         }
 
-        if (filter.complexName() != null && !filter.complexName().isBlank()) {
+        if (complexName != null && !complexName.isBlank()) {
             queryBuilder.append(" AND lower(complex.name) LIKE :cName");
-            params.put("cName", "%" + filter.complexName().toLowerCase() + "%");
+            params.put("cName", "%" + complexName.toLowerCase() + "%");
         }
 
-        if (filter.address() != null && !filter.address().isBlank()) {
-            String searchAddr = "%" + filter.address().toLowerCase() + "%";
-
+        if (address != null && !address.isBlank()) {
             queryBuilder.append(" AND (lower(complex.street) LIKE :addr " +
                     "OR lower(complex.city) LIKE :addr " +
                     "OR lower(complex.zipCode) LIKE :addr)");
-
-            params.put("addr", searchAddr);
+            params.put("addr", "%" + address.toLowerCase() + "%");
         }
 
         queryBuilder.append(" AND active = true");

@@ -1,1 +1,0 @@
-export { default as component } from "../../../../src/routes/vendor/edit-complex/[id]/+page.svelte";

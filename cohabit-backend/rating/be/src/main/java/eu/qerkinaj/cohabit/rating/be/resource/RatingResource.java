@@ -1,7 +1,7 @@
 package eu.qerkinaj.cohabit.rating.be.resource;
 
-import eu.qerkinaj.cohabit.rating.api.dto.RatingDTO;
-import eu.qerkinaj.cohabit.rating.api.dto.RatingInput;
+import eu.qerkinaj.cohabit.rating.be.dto.RatingDTO;
+import eu.qerkinaj.cohabit.rating.be.dto.RatingInput;
 import eu.qerkinaj.cohabit.rating.be.service.RatingService;
 import io.quarkus.security.Authenticated;
 import jakarta.annotation.security.PermitAll;

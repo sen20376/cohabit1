@@ -1,6 +1,5 @@
 package eu.qerkinaj.cohabit.catalog.resource;
 
-import eu.qerkinaj.cohabit.catalog.dto.ComplexSearchDTO;
 import eu.qerkinaj.cohabit.catalog.dto.CreateResidentialComplexDTO;
 import eu.qerkinaj.cohabit.catalog.dto.ResidentialComplexDTO;
 import eu.qerkinaj.cohabit.catalog.service.ResidentialComplexService;
@@ -11,7 +10,6 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
 
 import java.util.List;
@@ -20,15 +18,12 @@ import java.util.UUID;
 @Path("/api/v1/catalog")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ResidentialComplexResource {
+public class ResidentialComplexResource extends CatalogResourceBase {
 
     private static final Logger LOG = Logger.getLogger(ResidentialComplexResource.class);
 
     @Inject
     ResidentialComplexService residentialComplexService;
-
-    @Inject
-    JsonWebToken jwt;
 
     @GET
     @Path("/complexes")
@@ -96,17 +91,8 @@ public class ResidentialComplexResource {
         LOG.infof("User [%s] searching complexes - Query: '%s', District: '%s'",
                 userId, searchTerm, district);
 
-        var filter = new ComplexSearchDTO(searchTerm, district);
-        return residentialComplexService.searchComplexes(filter);
+        return residentialComplexService.searchComplexes(searchTerm, district);
     }
 
 
-    private String getUserIdSafe() {
-        try {
-            String subject = jwt.getSubject();
-            return subject != null ? subject : "Anonymous";
-        } catch (Exception e) {
-            return "Anonymous";
-        }
-    }
 }

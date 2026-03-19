@@ -1,7 +1,6 @@
 package eu.qerkinaj.cohabit.catalog.resource;
 
 import eu.qerkinaj.cohabit.catalog.dto.ApartmentDTO;
-import eu.qerkinaj.cohabit.catalog.dto.ApartmentFilterDTO;
 import eu.qerkinaj.cohabit.catalog.dto.CreateApartmentDTO;
 import eu.qerkinaj.cohabit.catalog.service.ApartmentService;
 import eu.qerkinaj.cohabit.catalog.view.ApartmentView;
@@ -11,7 +10,6 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
 
 import java.util.List;
@@ -20,15 +18,12 @@ import java.util.UUID;
 @Path("/api/v1/catalog")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ApartmentResource {
+public class ApartmentResource extends CatalogResourceBase {
 
     private static final Logger LOG = Logger.getLogger(ApartmentResource.class);
 
     @Inject
     ApartmentService apartmentService;
-
-    @Inject
-    JsonWebToken jwt;
 
     @GET
     @Path("/apartments/{id}")
@@ -82,8 +77,7 @@ public class ApartmentResource {
         LOG.infof("User [%s] searching apartments with filters - Size: %s-%s, District: %s, Complex: %s",
                 userId, minSize, maxSize, district, complexName);
 
-        var filter = new ApartmentFilterDTO(minSize, maxSize, district, complexName, address);
-        return apartmentService.searchApartments(filter);
+        return apartmentService.searchApartments(minSize, maxSize, district, complexName, address);
     }
 
     @PUT
@@ -119,12 +113,4 @@ public class ApartmentResource {
         apartmentService.updateRating(id, newAverage);
     }
 
-    private String getUserIdSafe() {
-        try {
-            String subject = jwt.getSubject();
-            return subject != null ? subject : "Anonymous";
-        } catch (Exception e) {
-            return "Anonymous";
-        }
-    }
 }

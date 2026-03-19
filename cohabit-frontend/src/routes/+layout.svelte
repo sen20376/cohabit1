@@ -10,11 +10,6 @@
 </script>
 
 <div class="min-h-screen flex flex-col font-sans">
-	{#if $user}
-		<div class="bg-yellow-100 p-2 text-xs font-mono text-black border-b border-yellow-300">
-			DEBUG ROLES: {JSON.stringify($user.roles)}
-		</div>
-	{/if}
 	<nav class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur border-b border-gray-200 shadow-sm">
 		<div class="container mx-auto px-4 h-16 flex justify-between items-center">
 

@@ -13,11 +13,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>eu.qerkinaj.cohabit.rating</groupId>
-            <artifactId>rating-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>eu.qerkinaj.cohabit</groupId>
             <artifactId>common</artifactId>
             <version>${project.version}</version>

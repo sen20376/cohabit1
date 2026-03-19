@@ -4,12 +4,11 @@ import eu.qerkinaj.cohabit.catalog.client.RatingClient;
 import eu.qerkinaj.cohabit.catalog.domain.GeoRegion;
 import eu.qerkinaj.cohabit.catalog.domain.ResidentialComplex;
 import eu.qerkinaj.cohabit.catalog.dto.ApartmentDTO;
-import eu.qerkinaj.cohabit.catalog.dto.ComplexSearchDTO;
 import eu.qerkinaj.cohabit.catalog.dto.CreateResidentialComplexDTO;
 import eu.qerkinaj.cohabit.catalog.dto.ResidentialComplexDTO;
 import eu.qerkinaj.cohabit.catalog.mapper.CatalogMapper;
+import eu.qerkinaj.cohabit.catalog.dto.RatingDTO;
 import eu.qerkinaj.cohabit.catalog.view.ResidentialComplexView;
-import eu.qerkinaj.cohabit.rating.api.dto.RatingDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -119,6 +118,18 @@ public class ResidentialComplexService {
         complex.zipCode = dto.zipCode();
         complex.city = dto.city();
 
+        if (dto.latitude() != null && dto.longitude() != null) {
+            GeometryFactory gf = new GeometryFactory();
+            Point point = gf.createPoint(new Coordinate(dto.longitude(), dto.latitude()));
+            point.setSRID(4326);
+            complex.location = point;
+        }
+
+        if (dto.district() != null) {
+            GeoRegion region = GeoRegion.find("name", dto.district()).firstResult();
+            complex.geoRegion = region;
+        }
+
         LOG.infof("Complex %s updated by owner %s", id, userId);
     }
 
@@ -138,21 +149,20 @@ public class ResidentialComplexService {
         LOG.infof("Complex %s deleted by owner %s", id, userId);
     }
 
-    public List<ResidentialComplexDTO> searchComplexes(ComplexSearchDTO filter) {
-        LOG.infof("Searching complexes. Filter: Term='%s', District='%s'",
-                filter.searchTerm(), filter.district());
+    public List<ResidentialComplexDTO> searchComplexes(String searchTerm, String district) {
+        LOG.infof("Searching complexes. Filter: Term='%s', District='%s'", searchTerm, district);
 
         StringBuilder query = new StringBuilder("1=1");
         Map<String, Object> params = new HashMap<>();
 
-        if (filter.searchTerm() != null && !filter.searchTerm().isBlank()) {
+        if (searchTerm != null && !searchTerm.isBlank()) {
             query.append(" AND (lower(name) LIKE :search OR lower(street) LIKE :search)");
-            params.put("search", "%" + filter.searchTerm().toLowerCase() + "%");
+            params.put("search", "%" + searchTerm.toLowerCase() + "%");
         }
 
-        if (filter.district() != null && !filter.district().isBlank()) {
+        if (district != null && !district.isBlank()) {
             query.append(" AND lower(geoRegion.name) LIKE :district");
-            params.put("district", "%" + filter.district().toLowerCase() + "%");
+            params.put("district", "%" + district.toLowerCase() + "%");
         }
 
         List<ResidentialComplex> entities = ResidentialComplex.list(query.toString(), params);

@@ -1,7 +1,7 @@
 package eu.qerkinaj.cohabit.rating.be.mapper;
 
-import eu.qerkinaj.cohabit.rating.api.dto.RatingInput;
-import eu.qerkinaj.cohabit.rating.api.dto.RatingDTO;
+import eu.qerkinaj.cohabit.rating.be.dto.RatingInput;
+import eu.qerkinaj.cohabit.rating.be.dto.RatingDTO;
 import eu.qerkinaj.cohabit.rating.be.domain.Rating;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,6 +1,6 @@
 package eu.qerkinaj.cohabit.catalog.client;
 
-import eu.qerkinaj.cohabit.rating.api.dto.RatingDTO;
+import eu.qerkinaj.cohabit.catalog.dto.RatingDTO;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
