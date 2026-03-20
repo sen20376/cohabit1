@@ -19,11 +19,11 @@
             loading = true;
 
             const [aptsData, complexData] = await Promise.all([
-                apiCall('complex', '/api/v1/catalog/apartments', 'GET'),
+                apiCall('complex', '/api/v1/catalog/apartments/my', 'GET'),
                 apiCall('complex', '/api/v1/catalog/complexes', 'GET')
             ]);
 
-            apartments = aptsData.filter(a => a.ownerId === $user.id);
+            apartments = aptsData;
             complexes = complexData.filter(c => c.ownerId === $user.id);
 
         } catch (e) {

@@ -34,9 +34,14 @@ public class ApartmentService {
     public List<ApartmentDTO> getAllApartments() {
         LOG.info("Fetching all apartments from database...");
 
-        List<Apartment> entities = Apartment.listAll();
+        List<Apartment> entities = Apartment.list("active", true);
 
         LOG.infof("Found %d apartments.", entities.size());
+        return mapper.toApartmentDTOs(entities);
+    }
+
+    public List<ApartmentDTO> getApartmentsByOwner(UUID ownerId) {
+        List<Apartment> entities = Apartment.list("ownerId", ownerId);
         return mapper.toApartmentDTOs(entities);
     }
 

@@ -45,6 +45,14 @@ public class ApartmentResource extends CatalogResourceBase {
         return apartmentService.getAllApartments();
     }
 
+    @GET
+    @Path("/apartments/my")
+    @RolesAllowed(Role.VENDOR)
+    public List<ApartmentDTO> getMyApartments() {
+        UUID ownerId = UUID.fromString(jwt.getSubject());
+        return apartmentService.getApartmentsByOwner(ownerId);
+    }
+
     @POST
     @Path("/apartments")
     @RolesAllowed(Role.VENDOR)
