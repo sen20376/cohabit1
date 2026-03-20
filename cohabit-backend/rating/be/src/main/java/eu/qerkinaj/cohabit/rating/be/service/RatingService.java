@@ -149,20 +149,22 @@ public class RatingService {
 
     @Transactional
     public void voteHelpful(UUID ratingId, UUID userId) {
-        if (RatingVote.hasVoted(ratingId, userId)) {
+        if (userId != null && RatingVote.hasVoted(ratingId, userId)) {
             throw new BadRequestException("Du hast diese Bewertung bereits als hilfreich markiert.");
         }
 
         Rating rating = Rating.findById(ratingId);
         if (rating == null) throw new NotFoundException();
 
-        RatingVote vote = new RatingVote();
-        vote.ratingId = ratingId;
-        vote.userId = userId;
-        vote.persist();
+        if (userId != null) {
+            RatingVote vote = new RatingVote();
+            vote.ratingId = ratingId;
+            vote.userId = userId;
+            vote.persist();
+        }
 
         rating.helpfulVotes++;
 
-        LOG.infof("User %s voted helpful on rating %s", userId, ratingId);
+        LOG.infof("User %s voted helpful on rating %s", userId != null ? userId : "guest", ratingId);
     }
 }

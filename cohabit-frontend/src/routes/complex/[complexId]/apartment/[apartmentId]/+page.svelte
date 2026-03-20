@@ -114,16 +114,19 @@
     }
 
     async function handleVote(ratingId) {
-        if (!$user) {
-            alert("Bitte melde dich an, um abzustimmen.");
+        const votedKey = `voted_${ratingId}`;
+        if (localStorage.getItem(votedKey)) {
+            alert("Du hast hierfür bereits abgestimmt!");
             return;
         }
         try {
             await apiCall('rating', `/api/v1/ratings/${ratingId}/vote`, 'POST');
+            localStorage.setItem(votedKey, '1');
             await loadData();
         } catch (e) {
             if (e.message.includes('400')) {
                 alert("Du hast hierfür bereits abgestimmt!");
+                localStorage.setItem(votedKey, '1');
             } else {
                 alert("Fehler beim Abstimmen: " + e.message);
             }

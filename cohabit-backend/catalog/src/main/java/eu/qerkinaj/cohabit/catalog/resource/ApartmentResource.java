@@ -91,6 +91,7 @@ public class ApartmentResource extends CatalogResourceBase {
     @PATCH
     @Path("/apartments/{id}/active")
     @RolesAllowed(Role.VENDOR)
+    @Consumes(MediaType.WILDCARD)
     public void toggleActive(@PathParam("id") UUID id) {
         String userIdStr = jwt.getSubject();
         apartmentService.toggleActive(id, UUID.fromString(userIdStr));

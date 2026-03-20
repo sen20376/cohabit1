@@ -1,5 +1,7 @@
 package eu.qerkinaj.cohabit.catalog.dto;
 
+import java.util.List;
+
 public record CreateResidentialComplexDTO(
         String name,
         String street,
@@ -8,6 +10,7 @@ public record CreateResidentialComplexDTO(
         String city,
         String district,
         Double latitude,
-        Double longitude
+        Double longitude,
+        List<String> imageUrls
 ) {
 }

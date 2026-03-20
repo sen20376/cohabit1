@@ -17,6 +17,10 @@ import java.util.List;
 public interface CatalogMapper {
 
     @Mapping(target = "address", expression = "java(entity.street + \" \" + entity.houseNumber + \", \" + entity.zipCode + \" \" + entity.city)")
+    @Mapping(target = "city", source = "city")
+    @Mapping(target = "zipCode", source = "zipCode")
+    @Mapping(target = "street", source = "street")
+    @Mapping(target = "houseNumber", source = "houseNumber")
     @Mapping(target = "district", source = "geoRegion.name")
     @Mapping(target = "averageRating", source = "avgRating")
     @Mapping(target = "imageUrls", source = "images")
@@ -25,6 +29,7 @@ public interface CatalogMapper {
     List<ResidentialComplexDTO> toComplexDTOs(List<ResidentialComplex> entities);
 
     @Mapping(target = "complexId", source = "complex.id")
+    @Mapping(target = "city", source = "complex.city")
     @Mapping(target = "imageUrls", source = "images")
     ApartmentDTO toDTO(Apartment entity);
 

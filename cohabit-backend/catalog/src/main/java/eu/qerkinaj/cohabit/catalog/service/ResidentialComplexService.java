@@ -2,6 +2,7 @@ package eu.qerkinaj.cohabit.catalog.service;
 
 import eu.qerkinaj.cohabit.catalog.client.RatingClient;
 import eu.qerkinaj.cohabit.catalog.domain.GeoRegion;
+import eu.qerkinaj.cohabit.catalog.domain.Image;
 import eu.qerkinaj.cohabit.catalog.domain.ResidentialComplex;
 import eu.qerkinaj.cohabit.catalog.dto.ApartmentDTO;
 import eu.qerkinaj.cohabit.catalog.dto.CreateResidentialComplexDTO;
@@ -97,6 +98,20 @@ public class ResidentialComplexService {
         }
 
         complex.persist();
+
+        if (dto.imageUrls() != null) {
+            for (int i = 0; i < dto.imageUrls().size(); i++) {
+                String url = dto.imageUrls().get(i);
+                if (url != null && !url.isBlank()) {
+                    Image img = new Image();
+                    img.url = url;
+                    img.complex = complex;
+                    img.isPrimary = (i == 0);
+                    img.persist();
+                }
+            }
+        }
+
         LOG.infof("Persisted complex %s with ID %s", complex.name, complex.id);
     }
 

@@ -68,10 +68,11 @@ public class RatingResource {
 
     @POST
     @Path("/{id}/vote")
-    @Authenticated
+    @PermitAll
     public void voteHelpful(@PathParam("id") UUID id) {
         String userIdRaw = jwt.getSubject();
-        ratingService.voteHelpful(id, UUID.fromString(userIdRaw));
+        UUID userId = (userIdRaw != null) ? UUID.fromString(userIdRaw) : null;
+        ratingService.voteHelpful(id, userId);
     }
 
     @PUT

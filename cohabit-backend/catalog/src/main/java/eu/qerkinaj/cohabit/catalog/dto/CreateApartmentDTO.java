@@ -1,5 +1,6 @@
 package eu.qerkinaj.cohabit.catalog.dto;
 
+import java.util.List;
 import java.util.UUID;
 
 public record CreateApartmentDTO(
@@ -8,6 +9,7 @@ public record CreateApartmentDTO(
         String description,
         String doorNumber,
         Integer floor,
-        Double sizeSqm
+        Double sizeSqm,
+        List<String> imageUrls
 ) {
 }

@@ -117,7 +117,7 @@
                                 <div>
                                     <h3 class="font-bold text-lg text-slate-800 line-clamp-1">{apt.title}</h3>
                                     <p class="text-sm text-gray-500 flex items-center gap-1 mt-1">
-                                        📍 {apt.address?.city || 'Unbekannter Ort'}
+                                        📍 {apt.city || 'Unbekannter Ort'}
                                     </p>
                                 </div>
                                 <span class={`text-xs font-bold px-2 py-1 rounded-full ${apt.active !== false ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>

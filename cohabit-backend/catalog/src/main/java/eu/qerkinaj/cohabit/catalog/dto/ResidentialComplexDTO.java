@@ -8,6 +8,10 @@ public record ResidentialComplexDTO(
         UUID ownerId,
         String name,
         String address,
+        String city,
+        String zipCode,
+        String street,
+        String houseNumber,
         String district,
         Double averageRating,
         List<String> imageUrls
