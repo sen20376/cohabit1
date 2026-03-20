@@ -24,7 +24,9 @@ public class UserService {
     }
 
     public String getUserEmail(UUID uuid) {
-        return User.findById(uuid).email;
+        User user = User.findById(uuid);
+        if (user == null) throw new NotFoundException("User not found");
+        return user.email;
     }
 
     public List<UUID> getBookmarks(UUID userId) {

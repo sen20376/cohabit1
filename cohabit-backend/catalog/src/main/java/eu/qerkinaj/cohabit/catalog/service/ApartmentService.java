@@ -31,6 +31,7 @@ public class ApartmentService {
     @RestClient
     RatingClient ratingClient;
 
+    @Transactional
     public List<ApartmentDTO> getAllApartments() {
         LOG.info("Fetching all apartments from database...");
 
@@ -40,6 +41,7 @@ public class ApartmentService {
         return mapper.toApartmentDTOs(entities);
     }
 
+    @Transactional
     public List<ApartmentDTO> getApartmentsByOwner(UUID ownerId) {
         List<Apartment> entities = Apartment.list("ownerId", ownerId);
         return mapper.toApartmentDTOs(entities);
@@ -55,7 +57,6 @@ public class ApartmentService {
             throw new NotFoundException("Apartment not found: " + id);
         }
 
-        if (apartment.viewCount == null) apartment.viewCount = 0L;
         apartment.viewCount++;
 
         ApartmentDTO apartmentDTO = mapper.toDTO(apartment);
@@ -112,6 +113,7 @@ public class ApartmentService {
         LOG.infof("Apartment created successfully. Assigned ID: %s", apt.id);
     }
 
+    @Transactional
     public List<ApartmentDTO> searchApartments(Double minSize, Double maxSize, String district, String complexName, String address) {
         LOG.infof("Searching apartments. Filters - MinSize: %s, MaxSize: %s, District: '%s', Complex: '%s', Address: '%s'",
                 minSize, maxSize, district, complexName, address);

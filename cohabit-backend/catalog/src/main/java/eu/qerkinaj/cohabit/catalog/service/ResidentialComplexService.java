@@ -35,10 +35,12 @@ public class ResidentialComplexService {
     @RestClient
     RatingClient ratingClient;
 
+    @Transactional
     public List<ResidentialComplexDTO> getComplexesByOwner(UUID ownerId) {
         return mapper.toComplexDTOs(ResidentialComplex.list("ownerId", ownerId));
     }
 
+    @Transactional
     public List<ResidentialComplexDTO> getAllComplexes() {
         LOG.info("Fetching all residential complexes from database...");
 
@@ -93,10 +95,7 @@ public class ResidentialComplexService {
         complex.city = dto.city();
 
         if (dto.latitude() != null && dto.longitude() != null) {
-            GeometryFactory gf = new GeometryFactory();
-            Point point = gf.createPoint(new Coordinate(dto.longitude(), dto.latitude()));
-            point.setSRID(4326);
-            complex.location = point;
+            complex.location = createPoint(dto.latitude(), dto.longitude());
         }
 
         if (dto.district() != null) {
@@ -141,10 +140,7 @@ public class ResidentialComplexService {
         complex.city = dto.city();
 
         if (dto.latitude() != null && dto.longitude() != null) {
-            GeometryFactory gf = new GeometryFactory();
-            Point point = gf.createPoint(new Coordinate(dto.longitude(), dto.latitude()));
-            point.setSRID(4326);
-            complex.location = point;
+            complex.location = createPoint(dto.latitude(), dto.longitude());
         }
 
         if (dto.district() != null) {
@@ -171,6 +167,14 @@ public class ResidentialComplexService {
         LOG.infof("Complex %s deleted by owner %s", id, userId);
     }
 
+    private Point createPoint(Double latitude, Double longitude) {
+        GeometryFactory gf = new GeometryFactory();
+        Point point = gf.createPoint(new Coordinate(longitude, latitude));
+        point.setSRID(4326);
+        return point;
+    }
+
+    @Transactional
     public List<ResidentialComplexDTO> searchComplexes(String searchTerm, String district) {
         LOG.infof("Searching complexes. Filter: Term='%s', District='%s'", searchTerm, district);
 

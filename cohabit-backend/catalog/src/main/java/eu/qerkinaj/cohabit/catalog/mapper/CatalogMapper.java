@@ -1,11 +1,9 @@
 package eu.qerkinaj.cohabit.catalog.mapper;
 
 import eu.qerkinaj.cohabit.catalog.domain.Apartment;
-import eu.qerkinaj.cohabit.catalog.domain.GeoRegion;
 import eu.qerkinaj.cohabit.catalog.domain.Image;
 import eu.qerkinaj.cohabit.catalog.domain.ResidentialComplex;
 import eu.qerkinaj.cohabit.catalog.dto.ApartmentDTO;
-import eu.qerkinaj.cohabit.catalog.dto.GeoRegionDTO;
 import eu.qerkinaj.cohabit.catalog.dto.ResidentialComplexDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -34,9 +32,6 @@ public interface CatalogMapper {
     ApartmentDTO toDTO(Apartment entity);
 
     List<ApartmentDTO> toApartmentDTOs(List<Apartment> entities);
-
-    @Mapping(target = "parentCode", source = "parent.code")
-    GeoRegionDTO toDTO(GeoRegion entity);
 
     default String mapImageToString(Image image) {
         if (image == null) return null;

@@ -56,9 +56,9 @@ public class RatingService {
     public List<RatingDTO> getRatingsForTarget(UUID targetId) {
         LOG.debugf("Fetching all ratings for target [%s]...", targetId);
 
-        List<RatingDTO> results = Rating.list("targetId", Sort.descending("createdAt"), targetId)
+        List<RatingDTO> results = Rating.<Rating>list("targetId", Sort.descending("createdAt"), targetId)
                 .stream()
-                .map(entity -> mapper.toResponse((Rating) entity))
+                .map(mapper::toResponse)
                 .toList();
 
         LOG.infof("Found %d ratings for target [%s]", results.size(), targetId);
@@ -93,11 +93,7 @@ public class RatingService {
             double avg = avgResult instanceof Number ? ((Number) avgResult).doubleValue() : 0.0;
             double roundedAvg = Math.round(avg * 10.0) / 10.0;
 
-            LOG.infof("New calculated average for [%s] is %s. Sending update to Catalog-Service...", targetId, roundedAvg);
-
-//                catalogClient.updateAverageRating(targetId, roundedAvg);
-
-            LOG.info("Catalog updated successfully.");
+            LOG.infof("New calculated average for [%s] is %s.", targetId, roundedAvg);
         } catch (Exception e) {
             LOG.errorf(e, "Failed to update average in Catalog Service for target [%s]. Catalog might be out of sync.", targetId);
         }
