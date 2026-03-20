@@ -44,6 +44,7 @@ public class ResidentialComplexService {
         return mapper.toComplexDTOs(entities);
     }
 
+    @Transactional
     public ResidentialComplexView getComplexDetails(UUID id) {
         LOG.infof("Fetching details for complex ID: %s", id);
 
@@ -55,7 +56,9 @@ public class ResidentialComplexService {
         }
 
         ResidentialComplexDTO complexDTO = mapper.toDTO(complex);
-        List<ApartmentDTO> apartmentDTOs = mapper.toApartmentDTOs(complex.apartments);
+        List<ApartmentDTO> apartmentDTOs = mapper.toApartmentDTOs(
+                complex.apartments.stream().filter(a -> a.active).toList()
+        );
 
         LOG.debugf("Found %d apartments for complex %s", apartmentDTOs.size(), complex.name);
 
