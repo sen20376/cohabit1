@@ -83,8 +83,8 @@
             {:else}
                 <div class="space-y-4">
                     <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                        <label class="block text-sm font-bold text-blue-900 mb-2">Ich bin:</label>
-                        <select bind:value={regData.requestedRole} class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <label for="requested-role" class="block text-sm font-bold text-blue-900 mb-2">Ich bin:</label>
+                        <select id="requested-role" bind:value={regData.requestedRole} class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
                             <option value="USER">👤 Mieter (Suchend)</option>
                             <option value="VENDOR">🏠 Anbieter (Vermieter)</option>
                         </select>

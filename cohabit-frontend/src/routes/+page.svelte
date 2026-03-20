@@ -79,10 +79,11 @@
         <form on:submit|preventDefault={handleSearch} class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
 
             <div class="md:col-span-4">
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Adresse / Straße</label>
+                <label for="filter-address" class="block text-xs font-bold text-slate-500 uppercase mb-1">Adresse / Straße</label>
                 <div class="relative">
                     <span class="absolute left-3 top-2.5 text-slate-400">🔍</span>
                     <input
+                            id="filter-address"
                             type="text"
                             bind:value={filters.address}
                             placeholder="z.B. Hauptstraße"
@@ -92,18 +93,18 @@
             </div>
 
             <div class="md:col-span-2">
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Bezirk</label>
-                <input type="text" bind:value={filters.district} placeholder="1010" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
+                <label for="filter-district" class="block text-xs font-bold text-slate-500 uppercase mb-1">Bezirk</label>
+                <input id="filter-district" type="text" bind:value={filters.district} placeholder="1010" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
             </div>
 
             <div class="md:col-span-2">
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Min m²</label>
-                <input type="number" bind:value={filters.minSize} placeholder="0" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
+                <label for="filter-min-size" class="block text-xs font-bold text-slate-500 uppercase mb-1">Min m²</label>
+                <input id="filter-min-size" type="number" bind:value={filters.minSize} placeholder="0" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
             </div>
 
             <div class="md:col-span-2">
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Max m²</label>
-                <input type="number" bind:value={filters.maxSize} placeholder="150" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
+                <label for="filter-max-size" class="block text-xs font-bold text-slate-500 uppercase mb-1">Max m²</label>
+                <input id="filter-max-size" type="number" bind:value={filters.maxSize} placeholder="150" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
             </div>
 
             <div class="md:col-span-2 flex gap-2">

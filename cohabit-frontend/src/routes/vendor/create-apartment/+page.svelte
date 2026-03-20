@@ -49,8 +49,8 @@
     <form on:submit|preventDefault={submit}>
 
         <div class="form-group">
-            <label>Gehört zu welcher Anlage?</label>
-            <select bind:value={dto.complexId} required>
+            <label for="apartment-complex">Gehört zu welcher Anlage?</label>
+            <select id="apartment-complex" bind:value={dto.complexId} required>
                 {#each complexes as c}
                     <option value={c.id}>{c.name} ({c.zipCode})</option>
                 {/each}
@@ -58,34 +58,34 @@
         </div>
 
         <div class="form-group">
-            <label>Titel des Inserats</label>
-            <input type="text" bind:value={dto.title} required placeholder="Helle 2-Zimmer Wohnung..." />
+            <label for="apartment-title">Titel des Inserats</label>
+            <input id="apartment-title" type="text" bind:value={dto.title} required placeholder="Helle 2-Zimmer Wohnung..." />
         </div>
 
         <div class="form-group">
-            <label>Beschreibung</label>
-            <textarea bind:value={dto.description} rows="4"></textarea>
+            <label for="apartment-description">Beschreibung</label>
+            <textarea id="apartment-description" bind:value={dto.description} rows="4"></textarea>
         </div>
 
         <div class="row">
             <div class="form-group">
-                <label>Top Nr.</label>
-                <input type="text" bind:value={dto.doorNumber} required />
+                <label for="apartment-door-number">Top Nr.</label>
+                <input id="apartment-door-number" type="text" bind:value={dto.doorNumber} required />
             </div>
             <div class="form-group">
-                <label>Stockwerk</label>
-                <input type="number" bind:value={dto.floor} required />
+                <label for="apartment-floor">Stockwerk</label>
+                <input id="apartment-floor" type="number" bind:value={dto.floor} required />
             </div>
             <div class="form-group">
-                <label>Größe (m²)</label>
-                <input type="number" step="0.1" bind:value={dto.sizeSqm} required />
+                <label for="apartment-size-sqm">Größe (m²)</label>
+                <input id="apartment-size-sqm" type="number" step="0.1" bind:value={dto.sizeSqm} required />
             </div>
         </div>
 
         <div class="form-group">
-            <label>Bilder (URLs)</label>
+            <label for="apartment-image-url">Bilder (URLs)</label>
             <div class="image-input-row">
-                <input type="url" bind:value={imageUrlInput} placeholder="https://..." />
+                <input id="apartment-image-url" type="url" bind:value={imageUrlInput} placeholder="https://..." />
                 <button type="button" class="btn-add" on:click={addImageUrl}>+</button>
             </div>
             {#each dto.imageUrls as url, i}

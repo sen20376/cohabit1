@@ -67,8 +67,9 @@
         <form on:submit|preventDefault={submit} class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-6">
 
             <div>
-                <label class="block text-sm font-bold text-slate-700 mb-2">Name der Anlage</label>
+                <label for="edit-complex-name" class="block text-sm font-bold text-slate-700 mb-2">Name der Anlage</label>
                 <input
+                    id="edit-complex-name"
                         type="text"
                         bind:value={dto.name}
                         required
@@ -78,8 +79,9 @@
 
             <div class="grid grid-cols-3 gap-4">
                 <div class="col-span-2">
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Straße</label>
+                    <label for="edit-complex-street" class="block text-sm font-bold text-slate-700 mb-2">Straße</label>
                     <input
+                        id="edit-complex-street"
                             type="text"
                             bind:value={dto.streetName}
                             required
@@ -87,8 +89,9 @@
                     />
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Hausnr.</label>
+                    <label for="edit-complex-house-number" class="block text-sm font-bold text-slate-700 mb-2">Hausnr.</label>
                     <input
+                        id="edit-complex-house-number"
                             type="text"
                             bind:value={dto.houseNumber}
                             required
@@ -99,8 +102,9 @@
 
             <div class="grid grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">PLZ</label>
+                    <label for="edit-complex-zip-code" class="block text-sm font-bold text-slate-700 mb-2">PLZ</label>
                     <input
+                        id="edit-complex-zip-code"
                             type="text"
                             bind:value={dto.zipCode}
                             required
@@ -108,8 +112,9 @@
                     />
                 </div>
                 <div class="col-span-2">
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Bezirk (Optional)</label>
+                    <label for="edit-complex-district" class="block text-sm font-bold text-slate-700 mb-2">Bezirk (Optional)</label>
                     <input
+                        id="edit-complex-district"
                             type="text"
                             bind:value={dto.district}
                             class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"

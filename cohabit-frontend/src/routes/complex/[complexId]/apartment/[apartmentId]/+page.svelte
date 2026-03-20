@@ -341,11 +341,11 @@
                     {#if $user}
                         <div class="space-y-5">
                             <div>
-                                <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                <label for="apartment-rating-score" class="flex justify-between text-sm font-bold text-slate-700 mb-2">
                                     Gesamtnote
                                     <span class="bg-blue-100 text-blue-800 px-2 rounded">{ratingForm.score} / 5</span>
                                 </label>
-                                <input type="range" min="1" max="5" bind:value={ratingForm.score}
+                                <input id="apartment-rating-score" type="range" min="1" max="5" bind:value={ratingForm.score}
                                        class="w-full cursor-pointer accent-blue-600">
                                 <div class="flex justify-between text-xs text-slate-400 mt-1">
                                     <span>Schlecht</span><span>Exzellent</span>
@@ -355,8 +355,8 @@
                             <div class="grid grid-cols-1 gap-3 bg-white/50 p-4 rounded-lg border border-slate-100">
                                 {#each Object.keys(ratingForm.thematicRatings) as key}
                                     <div class="flex items-center justify-between gap-3">
-                                        <label class="text-xs font-medium text-slate-600 w-24">{criteriaLabels[key]}</label>
-                                        <input type="range" min="1" max="5" bind:value={ratingForm.thematicRatings[key]}
+                                        <label for={`apartment-thematic-${key}`} class="text-xs font-medium text-slate-600 w-24">{criteriaLabels[key]}</label>
+                                        <input id={`apartment-thematic-${key}`} type="range" min="1" max="5" bind:value={ratingForm.thematicRatings[key]}
                                                class="flex-grow cursor-pointer accent-indigo-500">
                                         <span class="text-xs font-bold w-4 text-right">{ratingForm.thematicRatings[key]}</span>
                                     </div>

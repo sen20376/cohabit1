@@ -67,8 +67,9 @@
         <form on:submit|preventDefault={submit} class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-6">
 
             <div>
-                <label class="block text-sm font-bold text-slate-700 mb-2">Titel</label>
+                <label for="edit-apartment-title" class="block text-sm font-bold text-slate-700 mb-2">Titel</label>
                 <input
+                    id="edit-apartment-title"
                         type="text"
                         bind:value={dto.title}
                         required
@@ -77,8 +78,9 @@
             </div>
 
             <div>
-                <label class="block text-sm font-bold text-slate-700 mb-2">Beschreibung</label>
+                <label for="edit-apartment-description" class="block text-sm font-bold text-slate-700 mb-2">Beschreibung</label>
                 <textarea
+                    id="edit-apartment-description"
                         bind:value={dto.description}
                         rows="4"
                         class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
@@ -87,8 +89,9 @@
 
             <div class="grid grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Top Nr.</label>
+                    <label for="edit-apartment-door-number" class="block text-sm font-bold text-slate-700 mb-2">Top Nr.</label>
                     <input
+                        id="edit-apartment-door-number"
                             type="text"
                             bind:value={dto.doorNumber}
                             required
@@ -96,8 +99,9 @@
                     />
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Stockwerk</label>
+                    <label for="edit-apartment-floor" class="block text-sm font-bold text-slate-700 mb-2">Stockwerk</label>
                     <input
+                        id="edit-apartment-floor"
                             type="number"
                             bind:value={dto.floor}
                             required
@@ -105,8 +109,9 @@
                     />
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Größe (m²)</label>
+                    <label for="edit-apartment-size-sqm" class="block text-sm font-bold text-slate-700 mb-2">Größe (m²)</label>
                     <input
+                        id="edit-apartment-size-sqm"
                             type="number"
                             step="0.1"
                             bind:value={dto.sizeSqm}

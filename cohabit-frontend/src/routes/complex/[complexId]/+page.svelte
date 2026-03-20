@@ -322,11 +322,12 @@
                     {#if $user}
                         <div class="space-y-5">
                             <div>
-                                <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                <label for="rating-score" class="flex justify-between text-sm font-bold text-slate-700 mb-2">
                                     Gesamtnote
                                     <span class="bg-blue-100 text-blue-800 px-2 rounded">{ratingForm.score} / 5</span>
                                 </label>
                                 <input
+                                    id="rating-score"
                                         type="range"
                                         min="1"
                                         max="5"
@@ -341,8 +342,9 @@
                             <div class="grid grid-cols-1 gap-3 bg-white/50 p-4 rounded-lg border border-slate-100">
                                 {#each Object.keys(ratingForm.thematicRatings) as key}
                                     <div class="flex items-center justify-between gap-3">
-                                        <label class="text-xs font-medium text-slate-600 w-24">{criteriaLabels[key]}</label>
+                                        <label for={`thematic-${key}`} class="text-xs font-medium text-slate-600 w-24">{criteriaLabels[key]}</label>
                                         <input
+                                                id={`thematic-${key}`}
                                                 type="range"
                                                 min="1"
                                                 max="5"

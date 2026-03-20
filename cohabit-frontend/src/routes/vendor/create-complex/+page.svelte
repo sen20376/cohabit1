@@ -38,41 +38,41 @@
     <h2>Neue Wohnanlage</h2>
     <form on:submit|preventDefault={submit}>
         <div class="form-group">
-            <label>Name der Anlage</label>
-            <input type="text" bind:value={dto.name} required placeholder="z.B. Donau-View" />
+            <label for="complex-name">Name der Anlage</label>
+            <input id="complex-name" type="text" bind:value={dto.name} required placeholder="z.B. Donau-View" />
         </div>
 
         <div class="row">
             <div class="form-group">
-                <label>Straße</label>
-                <input type="text" bind:value={dto.street} required />
+                <label for="complex-street">Straße</label>
+                <input id="complex-street" type="text" bind:value={dto.street} required />
             </div>
             <div class="form-group sm">
-                <label>Nr.</label>
-                <input type="text" bind:value={dto.houseNumber} required />
+                <label for="complex-house-number">Nr.</label>
+                <input id="complex-house-number" type="text" bind:value={dto.houseNumber} required />
             </div>
         </div>
 
         <div class="row">
             <div class="form-group sm">
-                <label>PLZ</label>
-                <input type="text" bind:value={dto.zipCode} required />
+                <label for="complex-zip-code">PLZ</label>
+                <input id="complex-zip-code" type="text" bind:value={dto.zipCode} required />
             </div>
             <div class="form-group">
-                <label>Stadt</label>
-                <input type="text" bind:value={dto.city} required />
+                <label for="complex-city">Stadt</label>
+                <input id="complex-city" type="text" bind:value={dto.city} required />
             </div>
         </div>
 
         <div class="form-group">
-            <label>Bezirk (optional)</label>
-            <input type="text" bind:value={dto.district} placeholder="z.B. Leopoldstadt" />
+            <label for="complex-district">Bezirk (optional)</label>
+            <input id="complex-district" type="text" bind:value={dto.district} placeholder="z.B. Leopoldstadt" />
         </div>
 
         <div class="form-group">
-            <label>Bilder (URLs)</label>
+            <label for="complex-image-url">Bilder (URLs)</label>
             <div class="image-input-row">
-                <input type="url" bind:value={imageUrlInput} placeholder="https://..." />
+                <input id="complex-image-url" type="url" bind:value={imageUrlInput} placeholder="https://..." />
                 <button type="button" class="btn-add" on:click={addImageUrl}>+</button>
             </div>
             {#each dto.imageUrls as url, i}
