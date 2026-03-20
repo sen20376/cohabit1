@@ -4,6 +4,7 @@
     import { apiCall } from '$lib/api';
     import { user } from '$lib/auth';
     import { goto } from '$app/navigation';
+    import { CRITERIA_LABELS, defaultRatingForm, formatDate } from '$lib/utils';
 
     const { complexId, apartmentId } = $page.params;
 
@@ -16,21 +17,9 @@
     let isBookmarked = false;
     let bookmarkLoading = false;
 
-    const criteriaLabels = {
-        noise: 'Lautstärke',
-        light: 'Helligkeit',
-        cleanliness: 'Sauberkeit',
-        transport: 'Öffis',
-        neighborhood: 'Gegend'
-    };
+    const criteriaLabels = CRITERIA_LABELS;
 
-    let ratingForm = {
-        score: 5,
-        comment: '',
-        thematicRatings: {
-            noise: 3, light: 3, cleanliness: 3, transport: 3, neighborhood: 3
-        }
-    };
+    let ratingForm = defaultRatingForm();
 
     async function loadBookmarkState() {
         if (!$user) return;
@@ -146,11 +135,7 @@
 
     function cancelEdit() {
         editingRatingId = null;
-        ratingForm = {
-            score: 5,
-            comment: '',
-            thematicRatings: { noise: 3, light: 3, cleanliness: 3, transport: 3, neighborhood: 3 }
-        };
+        ratingForm = defaultRatingForm();
     }
 
     async function handleDeleteRating(ratingId) {
@@ -198,10 +183,7 @@
         goto(`/vendor/edit-apartment/${apartmentId}`);
     }
 
-    function formatDate(isoString) {
-        if (!isoString) return 'Gerade eben';
-        return new Date(isoString).toLocaleDateString('de-DE');
-    }
+
 </script>
 
 <svelte:head>

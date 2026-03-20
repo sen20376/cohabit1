@@ -1,12 +1,6 @@
 <script>
 	import { user, logout } from '$lib/auth';
-	import { goto } from '$app/navigation';
 	import '../app.css';
-
-	function handleLogout() {
-		logout();
-		goto('/');
-	}
 </script>
 
 <div class="min-h-screen flex flex-col font-sans">
@@ -40,7 +34,7 @@
 						</a>
 					{/if}
 
-					<button on:click={handleLogout}
+					<button on:click={logout}
 							class="px-4 py-2 text-sm font-medium text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-50 hover:text-slate-900 transition-colors">
 						Logout
 					</button>

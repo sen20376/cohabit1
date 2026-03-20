@@ -20,11 +20,11 @@
 
             const [aptsData, complexData] = await Promise.all([
                 apiCall('complex', '/api/v1/catalog/apartments/my', 'GET'),
-                apiCall('complex', '/api/v1/catalog/complexes', 'GET')
+                apiCall('complex', '/api/v1/catalog/complexes/my', 'GET')
             ]);
 
             apartments = aptsData;
-            complexes = complexData.filter(c => c.ownerId === $user.id);
+            complexes = complexData;
 
         } catch (e) {
             errorMsg = "Fehler beim Laden der Daten: " + e.message;

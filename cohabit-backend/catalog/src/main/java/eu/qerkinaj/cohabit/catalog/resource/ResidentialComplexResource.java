@@ -36,6 +36,14 @@ public class ResidentialComplexResource extends CatalogResourceBase {
     }
 
     @GET
+    @Path("/complexes/my")
+    @RolesAllowed(Role.VENDOR)
+    public List<ResidentialComplexDTO> getMyComplexes() {
+        UUID ownerId = UUID.fromString(jwt.getSubject());
+        return residentialComplexService.getComplexesByOwner(ownerId);
+    }
+
+    @GET
     @Path("/complexes/{id}")
     @PermitAll
     public ResidentialComplexView getComplexDetails(@PathParam("id") UUID id) {

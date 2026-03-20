@@ -35,6 +35,10 @@ public class ResidentialComplexService {
     @RestClient
     RatingClient ratingClient;
 
+    public List<ResidentialComplexDTO> getComplexesByOwner(UUID ownerId) {
+        return mapper.toComplexDTOs(ResidentialComplex.list("ownerId", ownerId));
+    }
+
     public List<ResidentialComplexDTO> getAllComplexes() {
         LOG.info("Fetching all residential complexes from database...");
 

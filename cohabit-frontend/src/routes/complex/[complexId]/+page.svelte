@@ -3,6 +3,7 @@
     import { onMount } from 'svelte';
     import { apiCall } from '$lib/api';
     import { user } from '$lib/auth';
+    import { CRITERIA_LABELS, defaultRatingForm, formatDate } from '$lib/utils';
 
     const complexId = $page.params.complexId;
 
@@ -15,21 +16,9 @@
 
     let thematicAverages = {};
 
-    const criteriaLabels = {
-        noise: 'Lautstärke',
-        light: 'Helligkeit',
-        cleanliness: 'Sauberkeit',
-        transport: 'Öffis',
-        neighborhood: 'Gegend'
-    };
+    const criteriaLabels = CRITERIA_LABELS;
 
-    let ratingForm = {
-        score: 5,
-        comment: '',
-        thematicRatings: {
-            noise: 3, light: 3, cleanliness: 3, transport: 3, neighborhood: 3
-        }
-    };
+    let ratingForm = defaultRatingForm();
 
     async function loadData() {
         loading = true;
@@ -115,11 +104,7 @@
 
     function cancelEdit() {
         editingRatingId = null;
-        ratingForm = {
-            score: 5,
-            comment: '',
-            thematicRatings: { noise: 3, light: 3, cleanliness: 3, transport: 3, neighborhood: 3 }
-        };
+        ratingForm = defaultRatingForm();
     }
 
     async function handleDeleteRating(ratingId) {
@@ -185,10 +170,7 @@
         }
     }
 
-    function formatDate(isoString) {
-        if (!isoString) return 'Gerade eben';
-        return new Date(isoString).toLocaleDateString('de-DE');
-    }
+
 </script>
 
 <svelte:head>

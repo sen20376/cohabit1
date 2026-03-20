@@ -167,7 +167,7 @@
         {:else}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {#each complexes as complex}
-                    <a href={`complex/${complex.id}`} class="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:border-blue-200 transition-all duration-300 flex flex-col h-full">
+                    <a href={`/complex/${complex.id}`} class="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:border-blue-200 transition-all duration-300 flex flex-col h-full">
 
                         <div class="relative h-48 bg-slate-100 overflow-hidden">
                             {#if complex.imageUrls?.[0]}
